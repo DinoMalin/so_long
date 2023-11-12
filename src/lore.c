@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:39:53 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 22:22:18 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 22:55:50 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	dialogue()
 	ft_printf("de voir ses bébés servir les Ptéras !\nNi une, ni deux, ");
 	ft_printf("il se lance alors à la course aux oeufs !\n");
 	ft_printf("%s-Vous n'aurez pas mes enfants !\n", GREEN);
-	ft_printf("%s-Ce ne sont déjà plus tes enfants, \n", RED);
+	ft_printf("%s-Ce ne sont déjà plus tes enfants, ", RED);
 	ft_printf("MOUAHAHAHAHA !!%s\n\n\n", WHITE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:44 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 17:41:58 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 23:21:14 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static void	update_anim(t_env *env)
 {
 	t_coords	co;
+	int			i;
 
 	co.y = 0;
+	i = -1;
 	while (env->map[co.y])
 	{
 		co.x = 0;
@@ -24,9 +26,7 @@ static void	update_anim(t_env *env)
 		{
 			if (co.x == env->player.x && co.y == env->player.y)
 				update_map(env, co.x, co.y);
-			else if (env->map[co.y][co.x] == '1' || env->map[co.y][co.x] == 'C')
-				update_map(env, co.x, co.y);
-			else if (env->map[co.y][co.x] == 'E')
+			else if (ft_strchr("1EC", env->map[co.y][co.x]))
 				update_map(env, co.x, co.y);
 			co.x++;
 		}
@@ -41,12 +41,16 @@ static void	update_sprite(t_env *env)
 		env->sprites.portal_index += 1;
 	env->sprites.dino_index++;
 	env->sprites.egg_index++;
+	env->sprites.ptera_index++;
+	if (env->sprites.ptera_index == 3)
+		env->sprites.ptera_index = 0;
 	if (env->sprites.dino_index == 3)
 		env->sprites.dino_index = 0;
 	if (env->sprites.portal_index == 6)
 		env->sprites.portal_index = 0;
 	if (env->sprites.egg_index == 4)
 		env->sprites.egg_index = 0;
+	update_pteras(env, env->player);
 	update_anim(env);
 }
 

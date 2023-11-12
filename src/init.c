@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:33:54 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 22:17:20 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 23:36:24 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,27 @@ void	*get_image(t_env *env, char *img)
 	return (result);
 }
 
-static void	init_sprites(t_env *env, t_sprites *sprites)
+static void	init_sprites(t_env *env)
 {
 	init_dino(env);
 	init_eggs(env);
 	init_water(env);
 	init_portal(env);
-	sprites->tile = get_image(env, "assets/tile/tile_1.xpm");
+	init_ptera(env);
+	env->sprites.tile = get_image(env, "assets/tile/tile_1.xpm");
 }
 
-static void	init_player(t_coords *player, t_env *env)
+static void	init_player(t_env *env)
 {
-	get_coords(player, env->map);
-	player->looking_left = 0;
+	get_coords(&env->player, env->map);
+	env->player.looking_left = 0;
 }
 
 void	init_env(t_env *env)
 {
-	char		**map_cpy;
 
-	map_cpy = map_copy(env->map);
-	if (!env->map || !map_is_valid(map_cpy, env))
+	if (!env->map || !map_is_valid(env))
 		exit_game(env, 0);
-	free_map(map_cpy);
 	env->score = 0;
 	env->count = 0;
 	env->eggs = get_nb_eggs(env->map);
@@ -52,8 +50,9 @@ void	init_env(t_env *env)
 	env->height = len_double_dim(env->map) * 32;
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "Dinosaure");
-	init_player(&env->player, env);
-	init_sprites(env, &env->sprites);
+	init_player(env);
+	init_sprites(env);
+	init_pteras_cos(env);
 	dialogue();
 }
 

@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:29:03 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 22:17:46 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 23:30:46 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ static void	free_sprites(t_env *env)
 	i = 0;
 	while (i < 4)
 		mlx_destroy_image(env->mlx, env->sprites.water[i++]);
+	i = 0;
+	while (i < 3)
+		mlx_destroy_image(env->mlx, env->sprites.ptera_left[i++]);
+	i = 0;
+	while (i < 3)
+		mlx_destroy_image(env->mlx, env->sprites.ptera_right[i++]);
 	mlx_destroy_image(env->mlx, env->sprites.tile);
 }
 
@@ -58,13 +64,13 @@ void	exit_game(t_env *env, int win)
 	mlx_destroy_window(env->mlx, env->win);
 	mlx_destroy_display(env->mlx);
 	free(env->mlx);
+	free(env->pteras);
 	exit(0);
 }
 
-void	error(char *str, t_env *env, char **map_cpy)
+void	error(char *str, t_env *env)
 {
 	ft_printf("Error\n%s.\n", str);
 	free_map(env->map);
-	free_map(map_cpy);
 	exit(0);
 }

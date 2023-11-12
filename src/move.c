@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 18:28:23 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 21:32:35 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 23:19:56 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,35 @@ void	print_score(t_env *env)
 void	update_coordinates(char ch, t_env *env)
 {
 	if (ch == 'z' || ch == 'R' || ch == 'w')
-		if (ft_strchr("ECP0", env->map[env->player.y - 1][env->player.x]))
+		if (!ft_strchr("1", env->map[env->player.y - 1][env->player.x]))
 			env->player.y--;
 	if (ch == 's' || ch == 'T')
-		if (ft_strchr("ECP0", env->map[env->player.y + 1][env->player.x]))
+		if (!ft_strchr("1", env->map[env->player.y + 1][env->player.x]))
 			env->player.y++;
 	if (ch == 'q' || ch == 'Q' || ch == 'a')
 	{
-		if (ft_strchr("ECP0", env->map[env->player.y][env->player.x - 1]))
+		if (!ft_strchr("1", env->map[env->player.y][env->player.x - 1]))
 			env->player.x--;
 		env->player.looking_left = 1;
 	}
 	if (ch == 'd' || ch == 'S')
 	{
-		if (ft_strchr("ECP0", env->map[env->player.y][env->player.x + 1]))
+		if (!ft_strchr("1", env->map[env->player.y][env->player.x + 1]))
 			env->player.x++;
 		env->player.looking_left = 0;
+	}
+}
+
+static void check_ennemy(t_env *env, t_coords player)
+{
+	int	i;
+
+	i = 0;
+	while (i < env->nb_pterras)
+	{
+		if (player.x == env->pteras[i].x && player.y == env->pteras[i].y)
+			exit_game(env, 0);
+		i++;
 	}
 }
 
@@ -61,6 +74,7 @@ void	move(char ch, t_env *env)
 		if (env->eggs == env->score)
 			exit_game(env, 1);
 	print_score(env);
+	check_ennemy(env, env->player);
 	update_map(env, old_x, old_y);
 	update_map(env, env->player.x, env->player.y);
 }

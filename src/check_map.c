@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:22:05 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 16:26:02 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 21:15:27 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,29 @@ static int contains_required(char **map)
 	return (exit == 1 && collectible && starting_position == 1);
 }
 
-int	map_is_valid(char **map, t_env *env)
+int	map_is_valid(t_env *env)
 {
 	t_coords	coos;
 	t_coords	starting_pos;
 
 	coos.y = -1;
-	while (map[++coos.y])
+	while (env->map[++coos.y])
 	{
 		coos.x = -1;
-		while (map[coos.y][++coos.x])
-			if (!ft_strchr("ECP10", map[coos.y][coos.x]))
-				error("Unexpected characters in the map", env, map);
+		while (env->map[coos.y][++coos.x])
+			if (!ft_strchr("ECP10V", env->map[coos.y][coos.x]))
+				error("Unexpected characters in the map", env);
 	}
 	get_coords(&starting_pos, env->map);
 	if (starting_pos.x == -1)
-		error("The map does not have a starting point", env, map);
-	if (!rect(map))
-		error("The map is not rectangular", env, map);
-	else if (!closed(map))
-		error("The map is not surrounded by walls", env, map);
-	else if (!contains_required(map))
-		error("The map has a problem with the requirement", env, map);
-	path(starting_pos.x, starting_pos.y, map);
-	if (!map_is_resolvable(map))
-		error("There is not any valid path", env, map);
+		error("The map does not have a starting point", env);
+	if (!rect(env->map))
+		error("The map is not rectangular", env);
+	else if (!closed(env->map))
+		error("The map is not surrounded by walls", env);
+	else if (!contains_required(env->map))
+		error("The map has a problem with the requirement", env);
+	if (!map_is_resolvable(starting_pos.x, starting_pos.y, env->map))
+		error("There is no valid path", env);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:43:17 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 17:42:35 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/12 23:37:55 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	update_count(t_env *env)
 	free(count);
 }
 
-char *dino_direction(t_env *env)
+static char *dino_direction(t_env *env)
 {
 	if (env->player.looking_left)
 		return env->sprites.dino_left[env->sprites.dino_index];
@@ -31,18 +31,25 @@ char *dino_direction(t_env *env)
 
 char	*image(t_env *env, int x, int y)
 {
+	int	i;
+
+	i = -1;
 	if (env->map[y][x] == '1')
 		return (env->sprites.water[env->sprites.water_index]);
 	if (env->player.x == x && env->player.y == y)
-		return (dino_direction(env));
-	if (env->map[y][x] == 'P' && env->player.x == x && env->player.y == y)
 		return (dino_direction(env));
 	if (env->map[y][x] == 'C')
 		return (env->sprites.egg[env->sprites.egg_index]);
 	if (env->map[y][x] == 'E')
 		return (env->sprites.portal[env->sprites.portal_index]);
-	else
-		return (env->sprites.tile);
+	while (++i < env->nb_pterras)
+		if (env->pteras[i].x == x && env->pteras[i].y == y)
+		{
+			if (env->pteras[i].looking_left)
+				return (env->sprites.ptera_left[env->sprites.ptera_index]);
+			return (env->sprites.ptera_right[env->sprites.ptera_index]);
+		}
+	return (env->sprites.tile);
 }
 
 void	update_map(t_env *env, int x, int y)

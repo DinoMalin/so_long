@@ -36,3 +36,10 @@ int main(int ac, char **av)
 	mlx_loop_hook(env.mlx, loop, &env);
 	mlx_loop(env.mlx);
 }
+
+/*
+A faire :
+Ennemis
+Pouvoir enchainer maps
+Cinématique
+*/
