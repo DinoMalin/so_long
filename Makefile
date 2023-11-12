@@ -1,51 +1,39 @@
 NAME = so_long
 
-MLX_DIR = mlx
-LIBFT_DIR = libft
-FT_PRINTF_DIR = ft_printf
-
-MLX = $(MLX_DIR)/libmlx.a
-LIBFT = $(MLX_DIR)/libft.a
-FT_PRINTF = $(MLX_DIR)/libftprintf.a
+LIBFT = lib/libft.a
 
 CC = cc
-CFLAGS =	-Wall -Wextra -Werror \
-			-I$(MLX_DIR) \
-			-I$(LIBFT_DIR) \
-			-I$(FT_PRINTF_DIR)/include
-LFLAGS =	-L$(MLX_DIR) \
-			-L$(LIBFT_DIR) \
-			-L$(FT_PRINTF_DIR) \
-			-lmlx -lXext -lX11 -lm -lz -lft -lftprintf
 
-FILES = main parse map check_map
+CFLAGS =	-Wall -Wextra -Werror -g \
+			-Iinclude
+
+LFLAGS =	-Llib \
+			-lmlx_Linux -lXext -lX11 -lm -lz -lft
+
+FILES = main parse update_map check_map move find_path init init_sprites end animation lore
 
 SRCS = $(addprefix src/, $(addsuffix .c, $(FILES)))
-OBJS = $(addprefix src/, $(addsuffix .o, $(FILES)))
+OBJS = $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
 clean :
 	rm -rf $(OBJS)
+	make fclean -C lib
 
 fclean : clean
 	rm -rf $(NAME)
+	make fclean -C lib
 
 re: fclean all
 
-.PHONY: all clean fclean re
-
-$(NAME): $(MLX) $(LIBFT) $(FT_PRINTF) $(OBJS)
+$(NAME): $(OBJS) $(LIBFT) 
 	$(CC) -o $@ $(OBJS) $(LFLAGS)
 
-$(MLX):
-	$(MAKE) -C $(MLX_DIR)
-
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	make -C lib
 
-$(FT_PRINTF):
-	$(MAKE) -C $(FT_PRINTF_DIR)
-
-%.o: %.c
+obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+.PHONY: all clean fclean re

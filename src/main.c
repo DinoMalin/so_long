@@ -1,45 +1,38 @@
-#include "mlx.h"
-#include "mlx_int.h"
-#include "../ft_printf/include/ft_printf.h"
-
-typedef struct s_env {
-	int	width;
-	int	height;
-	void *mlx;
-    void *win;
-} t_env;
-
-typedef struct s_character {
-	int x;
-	int y;
-} t_character;
+#include "so_long.h"
 
 int close_window(t_env *env)
 {
-	mlx_destroy_window(env->mlx, env->win);
-	exit(0);
+	exit_game(env, 0);
 	return (0);
 }
 
 int key_hook(int keycode, t_env *env)
 {
-	if (keycode == 65307)
+	if (keycode == ESCAPE)
 		close_window(env);
+	if (ft_strchr("zqsdRQTSwasd", keycode))
+		move(keycode, env);
 	return (0);
 }
 
-int main()
+int main(int ac, char **av)
 {
-	t_env env;
-	
-	ft_printf("test");
+	t_env		env;
 
-	env.mlx = mlx_init();
-	env.width = 800;
-	env.height = 600;
-	env.win = mlx_new_window(env.mlx, env.width, env.height, "dinosaure");
-
+	if (ac == 1)
+		env.map = get_map("maps/dino.ber");
+	else
+		env.map = get_map(av[1]);
+	if (!env.map)
+	{
+		ft_printf("Error\nMap does not exist!\n");
+		exit(0);
+	}
+	init_env(&env);
+	print_score(&env);
+	create_map(&env);
 	mlx_key_hook(env.win, key_hook, &env);
 	mlx_hook(env.win, 17, 0, close_window, &env);
+	mlx_loop_hook(env.mlx, loop, &env);
 	mlx_loop(env.mlx);
 }
