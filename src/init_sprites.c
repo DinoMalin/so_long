@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 08:03:47 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 23:27:52 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:49:45 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	init_water(t_env *env)
 
 void	init_ptera(t_env *env)
 {
-	env->sprites.ptera_right[0] = get_image(env, "assets/ptera/ptera_right_1.xpm");
-	env->sprites.ptera_right[1] = get_image(env, "assets/ptera/ptera_right_2.xpm");
-	env->sprites.ptera_right[2] = get_image(env, "assets/ptera/ptera_right_3.xpm");
-	env->sprites.ptera_left[0] = get_image(env, "assets/ptera/ptera_left_1.xpm");
-	env->sprites.ptera_left[1] = get_image(env, "assets/ptera/ptera_left_2.xpm");
-	env->sprites.ptera_left[2] = get_image(env, "assets/ptera/ptera_left_3.xpm");
+	env->sprites.ptera_right[0] = get_image(env, "assets/ptera/ptera_r_1.xpm");
+	env->sprites.ptera_right[1] = get_image(env, "assets/ptera/ptera_r_2.xpm");
+	env->sprites.ptera_right[2] = get_image(env, "assets/ptera/ptera_r_3.xpm");
+	env->sprites.ptera_left[0] = get_image(env, "assets/ptera/ptera_l_1.xpm");
+	env->sprites.ptera_left[1] = get_image(env, "assets/ptera/ptera_l_2.xpm");
+	env->sprites.ptera_left[2] = get_image(env, "assets/ptera/ptera_l_3.xpm");
 	env->sprites.ptera_index = 0;
 }

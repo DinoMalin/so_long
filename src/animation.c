@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 12:31:44 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 23:21:14 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/15 16:23:20 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	update_anim(t_env *env)
 
 	co.y = 0;
 	i = -1;
-	while (env->map[co.y])
+	while (env->map[env->lv][co.y])
 	{
 		co.x = 0;
-		while(env->map[co.y][co.x])
+		while (env->map[env->lv][co.y][co.x])
 		{
 			if (co.x == env->player.x && co.y == env->player.y)
 				update_map(env, co.x, co.y);
-			else if (ft_strchr("1EC", env->map[co.y][co.x]))
+			else if (ft_strchr("1EC", env->map[env->lv][co.y][co.x]))
 				update_map(env, co.x, co.y);
 			co.x++;
 		}
@@ -54,7 +54,7 @@ static void	update_sprite(t_env *env)
 	update_anim(env);
 }
 
-int		loop(t_env *env)
+int	loop(t_env *env)
 {
 	static int	frame = 0;
 

@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:56:49 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 20:14:32 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/15 17:53:11 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	path(int x, int y, char **map)
 
 int	check_resolvable(char **map)
 {
-	t_coords coos;
+	t_coords	coos;
 
 	coos.y = 0;
 	while (map[coos.y])

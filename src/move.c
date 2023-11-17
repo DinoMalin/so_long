@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 18:28:23 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 23:19:56 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 22:50:43 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,32 @@ void	print_score(t_env *env)
 void	update_coordinates(char ch, t_env *env)
 {
 	if (ch == 'z' || ch == 'R' || ch == 'w')
-		if (!ft_strchr("1", env->map[env->player.y - 1][env->player.x]))
+		if (env->map[env->lv][env->player.y - 1][env->player.x] != '1')
 			env->player.y--;
 	if (ch == 's' || ch == 'T')
-		if (!ft_strchr("1", env->map[env->player.y + 1][env->player.x]))
+		if (env->map[env->lv][env->player.y + 1][env->player.x] != '1')
 			env->player.y++;
 	if (ch == 'q' || ch == 'Q' || ch == 'a')
 	{
-		if (!ft_strchr("1", env->map[env->player.y][env->player.x - 1]))
+		if (env->map[env->lv][env->player.y][env->player.x - 1] != '1')
 			env->player.x--;
 		env->player.looking_left = 1;
 	}
 	if (ch == 'd' || ch == 'S')
 	{
-		if (!ft_strchr("1", env->map[env->player.y][env->player.x + 1]))
+		if (env->map[env->lv][env->player.y][env->player.x + 1] != '1')
 			env->player.x++;
 		env->player.looking_left = 0;
 	}
 }
 
-static void check_ennemy(t_env *env, t_coords player)
+static void	check_ennemy(t_env *env, t_coords player)
 {
 	int	i;
 
 	i = 0;
+	if (env->god)
+		return ;
 	while (i < env->nb_pterras)
 	{
 		if (player.x == env->pteras[i].x && player.y == env->pteras[i].y)
@@ -65,14 +67,14 @@ void	move(char ch, t_env *env)
 	update_coordinates(ch, env);
 	env->count++;
 	update_count(env);
-	if (env->map[env->player.y][env->player.x] == 'C')
+	if (env->map[env->lv][env->player.y][env->player.x] == 'C')
 	{
-		env->map[env->player.y][env->player.x] = '0';
+		env->map[env->lv][env->player.y][env->player.x] = '0';
 		env->score++;
 	}
-	if (env->map[env->player.y][env->player.x] == 'E')
+	if (env->map[env->lv][env->player.y][env->player.x] == 'E')
 		if (env->eggs == env->score)
-			exit_game(env, 1);
+			next_level(env);
 	print_score(env);
 	check_ennemy(env, env->player);
 	update_map(env, old_x, old_y);

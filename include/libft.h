@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:37:49 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 04:25:49 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 17:39:42 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,18 @@ t_list			*ft_lstnew(void *content);
 char			*get_next_line(int fd);
 char			*ft_strjoin_modified(char *s1, char *s2);
 
-int		ft_printf(const char *str, ...);
+int				ft_printf(const char *str, ...);
 
-int		ft_putstr(char *str);
-int		ft_putchar(char ch);
+int				ft_putstr(char *str);
+int				ft_putchar(char ch);
 
-int		ft_putnbr(int nb);
-void	ft_putunbr(unsigned int nb);
-int		ft_putunbr_count(unsigned int nb);
+int				ft_putnbr(int nb);
+void			ft_putunbr(unsigned int nb);
+int				ft_putunbr_count(unsigned int nb);
 
-int		ft_putptr_fd(void *addr, int fd);
-int		ft_puthexa(unsigned int nb, char *base);
-void	ft_puthexa_fd(unsigned int n, char *base, int fd);
-
+int				ft_putptr_fd(void *addr, int fd);
+int				ft_puthexa(unsigned int nb, char *base);
+void			ft_puthexa_fd(unsigned int n, char *base, int fd);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:33:54 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 23:36:24 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/15 16:44:14 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,29 @@ static void	init_sprites(t_env *env)
 
 static void	init_player(t_env *env)
 {
-	get_coords(&env->player, env->map);
+	get_coords(&env->player, env->map[env->lv]);
 	env->player.looking_left = 0;
 }
 
 void	init_env(t_env *env)
 {
-
-	if (!env->map || !map_is_valid(env))
-		exit_game(env, 0);
+	mlx_destroy_window(env->mlx, env->win);
+	ft_printf("\nLEVEL - %d\n", env->lv + 1);
 	env->score = 0;
 	env->count = 0;
-	env->eggs = get_nb_eggs(env->map);
-	env->width = ft_strlen(env->map[0]) * 32;
-	env->height = len_double_dim(env->map) * 32;
-	env->mlx = mlx_init();
+	env->eggs = get_nb_eggs(env->map[env->lv]);
+	env->width = ft_strlen(env->map[env->lv][0]) * 32;
+	env->height = len_double_dim(env->map[env->lv]) * 32;
+	env->sprites.portal_index = 0;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "Dinosaure");
+	if (env->lv == 0)
+		init_sprites(env);
 	init_player(env);
-	init_sprites(env);
 	init_pteras_cos(env);
-	dialogue();
+	create_map(env);
+	print_score(env);
+	mlx_key_hook(env->win, key_hook, env);
+	mlx_hook(env->win, 17, 0, close_window, env);
+	mlx_loop_hook(env->mlx, loop, env);
+	mlx_loop(env->mlx);
 }
-
-
-// void	init_game(t_env *env)
-// {
-// 	/*
-// 	`````````TO DO```````
-// 	*/
-// }

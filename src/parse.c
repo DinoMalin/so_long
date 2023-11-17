@@ -6,7 +6,7 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:59:59 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/10 06:13:58 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:51:13 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**get_map(char *file_name)
 {
 	int		file;
 	char	**result;
-	char 	*line;
+	char	*line;
 
 	file = open(file_name, O_RDONLY);
 	if (file == -1)
@@ -68,7 +68,6 @@ char	**get_map(char *file_name)
 	free(line);
 	return (result);
 }
-
 
 void	get_coords(t_coords *player, char **map)
 {
@@ -99,7 +98,7 @@ int	get_nb_eggs(char **map)
 	int	x;
 	int	y;
 	int	result;
-	
+
 	y = 0;
 	result = 0;
 	while (map[y])

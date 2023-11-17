@@ -6,29 +6,32 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:00:19 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 23:26:20 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 23:32:23 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "mlx.h"
-#include "libft.h"
-#include <fcntl.h>
+# include "mlx.h"
+# include "libft.h"
+# include <fcntl.h>
 
-#define ESCAPE 65307
-#define COUNT_COLOR 0x000000
+# define ESCAPE 65307
+# define NEXT 65506
 
-#define RED "\033[31m"
-#define WHITE "\033[37m"
-#define GREEN "\033[32m"
+# define COUNT_COLOR 0x000000
+# define COUNT_RED	0xFF0000
+
+# define RED "\033[31m"
+# define WHITE "\033[37m"
+# define GREEN "\033[32m"
 
 typedef struct s_coordinates {
-	int x;
-	int y;
+	int	x;
+	int	y;
 	int	looking_left;
-} t_coords;
+}	t_coords;
 
 typedef struct s_sprites {
 	void	*tile;
@@ -44,37 +47,47 @@ typedef struct s_sprites {
 	int		egg_index;
 	int		water_index;
 	int		portal_index;
-} t_sprites;
+}	t_sprites;
 
 typedef struct s_env {
 	void		*mlx;
 	void		*win;
 	int			width;
 	int			height;
-	char		**map;
+	char		***map;
 	int			count;
 	int			score;
 	int			eggs;
 	int			nb_pterras;
+	int			current_cinematic;
+	int			god;
+	int			lv;
+	int			nb_lv;
+	void		*cinematics[3];
 	t_coords	player;
 	t_coords	*pteras;
 	t_sprites	sprites;
-} t_env;
+}	t_env;
 
+int			key_hook(int keycode, t_env *env);
+int			close_window(t_env *env);
 
 char		**get_map(char *file_name);
+char		***get_maps(char **av, int ac, t_env *env);
+char		***get_default(char *def, t_env *env);
+
 void		create_map(t_env *env);
 int			len_double_dim(char **arr);
-int			map_is_valid(t_env *env);
+int			map_is_valid(t_env *env, char **map);
 void		move(char ch, t_env *env);
 void		get_coords(t_coords *player, char **map);
 int			get_nb_eggs(char **map);
 void		print_score(t_env *env);
-void		exit_game(t_env *env, int win);
+int			exit_game(t_env *env, int win);
 void		update_map(t_env *env, int x, int y);
 char		*image(t_env *env, int x, int y);
 void		path(int x, int y, char **map);
-void		free_map(char **map);
+void		free_map(char ***map);
 void		init_env(t_env *env);
 int			map_is_resolvable(int x, int y, char **map);
 void		error(char *str, t_env *env);
@@ -89,9 +102,10 @@ void		*get_image(t_env *env, char *img);
 void		update_count(t_env *env);
 int			loop(t_env *env);
 
-void	init_pteras_cos(t_env *env);
-void	update_pteras(t_env *env, t_coords player);
+void		init_pteras_cos(t_env *env);
+void		update_pteras(t_env *env, t_coords player);
 
-void	dialogue();
+void		init_lore(t_env *env);
+void		next_level(t_env *env);
 
 #endif

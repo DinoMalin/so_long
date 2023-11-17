@@ -6,43 +6,24 @@
 /*   By: jcario <jcario@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:39:53 by jcario            #+#    #+#             */
-/*   Updated: 2023/11/12 22:55:50 by jcario           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:49:12 by jcario           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	dialogue()
+void	init_lore(t_env *env)
 {
-	ft_printf("\n\n\n");
-	ft_printf("Jadis, dans un temps des plus reculés aujourd'hui oublié,\n");
-	ft_printf("Un T-rex veillait sur ses oeufs, tous au chaud dans leur ");
-	ft_printf("nid.\nUn calme parfait rompu par le gang des Pteranodons !\n");
-	ft_printf("Ces terribles prédateurs volants avaient en effet pour ");
-	ft_printf("habitude\nDe voler les oeufs des jeunes T-rex, et de faire de ");
-	ft_printf("ces futurs dinos, \nDes recrues pour les servir, des chasseurs ");
-	ft_printf("pour les nourrir, des bouffons pour leur sourire.\n\n");
-	ft_printf("Mais ce Dino était celui de trop :  Jamais Dino n'acceptera\n");
-	ft_printf("de voir ses bébés servir les Ptéras !\nNi une, ni deux, ");
-	ft_printf("il se lance alors à la course aux oeufs !\n");
-	ft_printf("%s-Vous n'aurez pas mes enfants !\n", GREEN);
-	ft_printf("%s-Ce ne sont déjà plus tes enfants, ", RED);
-	ft_printf("MOUAHAHAHAHA !!%s\n\n\n", WHITE);
+	env->width = 1300;
+	env->height = 900;
+	env->mlx = mlx_init();
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "Dinosaure");
+	env->cinematics[0] = get_image(env, "assets/cinematic/1.xpm");
+	env->cinematics[1] = get_image(env, "assets/cinematic/2.xpm");
+	env->cinematics[2] = get_image(env, "assets/cinematic/3.xpm");
+	env->current_cinematic = 0;
+	mlx_put_image_to_window(env->mlx, env->win, env->cinematics[0], 0, 0);
+	mlx_key_hook(env->win, key_hook, env);
+	mlx_hook(env->win, 17, 0, close_window, env);
+	mlx_loop(env->mlx);
 }
-
-
-/*
-Jadis, dans un temps des plus reculés aujourd'hui oublié,
-Un T-rex veillait sur ses oeufs, tous au chaud dans leur nid.
-Un calme parfait rompu par le gang des Pteranodons !
-Ces terribles prédateurs volants avaient en effet pour habitude
-De voler les oeufs des jeunes T-rex, et de faire de ces futurs dinos,
-Des recrues pour les servir, des chasseurs pour les nourrir, des bouffons pour leur sourire.
-
-Mais ce Dino était celui de trop : Jamais Dino n'acceptera de voir ses
-bébés servir les Ptéras ! Ni une ni deux il se lance alors à la course aux oeufs !
--Vous n'aurez pas mes enfants !
--Ce ne sont déjà plus tes enfants, HAHAHAHAHAHA !
-
-
-*/
