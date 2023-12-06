@@ -10,15 +10,16 @@ CFLAGS =	-Wall -Wextra -Werror -g \
 LFLAGS =	-Llib \
 			-lmlx_Linux -lXext -lX11 -lm -lz -lft
 
-FILES = main parse update_map check_map move find_path init init_sprites end animation lore
+FILES = main parse update_map check_map move find_path init init_sprites end animation lore pteras handle_multiple_maps
 
+OBJ_DIR = obj/
 SRCS = $(addprefix src/, $(addsuffix .c, $(FILES)))
-OBJS = $(addprefix obj/, $(addsuffix .o, $(FILES)))
+OBJS = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
 clean :
-	rm -rf $(OBJS)
+	rm -rf $(OBJ_DIR)
 	make fclean -C lib
 
 fclean : clean
@@ -27,11 +28,14 @@ fclean : clean
 
 re: fclean all
 
-$(NAME): $(OBJS) $(LIBFT) 
+$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
 	$(CC) -o $@ $(OBJS) $(LFLAGS)
 
 $(LIBFT):
 	make -C lib
+
+$(OBJ_DIR):
+	mkdir $@
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
