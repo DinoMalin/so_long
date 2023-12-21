@@ -15,10 +15,8 @@
 static void	update_anim(t_env *env)
 {
 	t_coords	co;
-	int			i;
 
 	co.y = 0;
-	i = -1;
 	while (env->map[env->lv][co.y])
 	{
 		co.x = 0;
