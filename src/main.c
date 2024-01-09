@@ -59,18 +59,3 @@ int	main(int ac, char **av)
 	env.current_cinematic = -1;
 	init_lore(&env);
 }
-
-/*
-A faire :
-Ennemis //
-Pouvoir enchainer maps
-
-// Verif les unes après les autres : on boucle dessus
-
-- Verif maps
-- Réinitialiser maps
-- 
-
-
-Cinématique //
-*/
